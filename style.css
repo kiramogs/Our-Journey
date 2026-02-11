@@ -1,0 +1,182 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: auto; /* we want precise control */
+}
+
+body {
+    font-family: 'Lora', serif;
+    background: #1a1410;
+    color: #fdf6ee;
+    overflow-x: hidden;
+}
+
+/* ===== Canvas ===== */
+#canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* ===== Scroll Spacer ===== */
+#scrollSpacer {
+    position: relative;
+    z-index: 0;
+    height: 600vh; /* tall enough for smooth 200-frame scrub */
+    width: 100%;
+    pointer-events: none;
+}
+
+/* ===== Loading Screen ===== */
+#loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #2c1f16 0%, #1a1410 70%, #0d0a07 100%);
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loader-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #f7c59f, #e8837c, #f7c59f);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+    margin-bottom: 0.5rem;
+}
+
+.loader-title::before {
+    content: '❤️ ';
+    -webkit-text-fill-color: initial;
+}
+
+.loader-title::after {
+    content: ' ❤️';
+    -webkit-text-fill-color: initial;
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 200% center; }
+}
+
+.loader-subtitle {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    color: #c4a47a;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+}
+
+.progress-bar-container {
+    width: min(320px, 80vw);
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    border: 1px solid rgba(247, 197, 159, 0.15);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e8837c, #f7c59f);
+    border-radius: 3px;
+    transition: width 0.15s ease-out;
+    box-shadow: 0 0 12px rgba(232, 131, 124, 0.4);
+}
+
+.loader-percent {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: #f7c59f;
+    font-weight: 600;
+}
+
+/* ===== Scroll Hint ===== */
+.scroll-hint {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+}
+
+.scroll-hint.visible {
+    opacity: 1;
+    animation: hintPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 0.6; transform: translateX(-50%) translateY(-6px); }
+}
+
+.scroll-hint-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.scroll-hint-inner p {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: rgba(253, 246, 238, 0.7);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.scroll-mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid rgba(253, 246, 238, 0.5);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+}
+
+.scroll-wheel {
+    width: 4px;
+    height: 10px;
+    background: rgba(247, 197, 159, 0.8);
+    border-radius: 2px;
+    animation: wheelScroll 1.8s ease-in-out infinite;
+}
+
+@keyframes wheelScroll {
+    0% { transform: translateY(0); opacity: 1; }
+    60% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 0; }
+}
