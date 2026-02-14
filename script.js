@@ -2,8 +2,8 @@
     'use strict';
 
     // ===== Configuration =====
-    const TOTAL_FRAMES = 200;
-    const FRAME_PREFIX = 'Images/0208_';
+    const TOTAL_FRAMES = 243;
+    const FRAME_PREFIX = 'Images/0208(1)_';
     const FRAME_EXT = '.jpg';
     const LERP_FACTOR = 0.12; // Smoothness (lower = smoother, higher = snappier)
 
